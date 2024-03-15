@@ -1,6 +1,18 @@
 import streamlit as st
 import base64
 from datetime import datetime
+import openai
+from dotenv import load_dotenv
+from openai import OpenAI
+import os
+
+
+load_dotenv()
+ai_model = "gpt-4-1106-preview"
+openai.api_key = os.getenv("OPEN_API_KEY")
+
+if 'client' not in st.session_state:
+    st.session_state.client = OpenAI()
 
 # Set the page config to wide mode
 st.set_page_config(layout="wide")
@@ -104,6 +116,38 @@ body {
 .arrow-output {
     margin-left: 10px; /* Space between the arrow and the text */
 }
+
+div.stTextInput > div > div > input {
+    background-color: white !important; /* Complete white background */
+    color: black !important; /* Text color */
+    border-color: white !important; /* Border color */
+    border-radius: 0 !important; /* Make corners sharp */
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    z-index: 999;
+}
+
+div.stTextInput > div {
+    background-color: white !important; /* Complete white background */
+    color: black !important; /* Text color */
+    border-color: white !important; /* Border color */
+    border-radius: 0 !important; /* Make corners sharp */
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    z-index: 999;
+}
+
+.sticky-bottom-container {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    z-index: 999;
+}
 </style>
 """
 
@@ -137,7 +181,6 @@ current_time = datetime.now().strftime("%H:%M")
 st.markdown(create_flex_container("input", current_time, "hihi"), unsafe_allow_html=True)
 st.markdown(create_flex_container("output", current_time, "MISSION COMPLETE"), unsafe_allow_html=True)
 
-# Rest of your Streamlit app
 user_input = st.text_input("Enter some text:", value="", key="user_input", label_visibility="collapsed")
 if user_input:
     st.markdown(create_flex_container("output", current_time, user_input), unsafe_allow_html=True)
