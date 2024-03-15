@@ -5,7 +5,7 @@ import openai
 from dotenv import load_dotenv
 from openai import OpenAI
 import os
-
+import time
 
 load_dotenv()
 ai_model = "gpt-4-1106-preview"
@@ -13,6 +13,28 @@ openai.api_key = os.getenv("OPEN_API_KEY")
 
 if 'client' not in st.session_state:
     st.session_state.client = OpenAI()
+
+if 'assistant' not in st.session_state:
+    st.session_state.assistant = st.session_state.client.beta.assistants.create(
+        name="Spy Assistant",
+        model=ai_model,
+        instructions="""You work for a spy agency. Your job is to give commands to spy agents called "Jane & John Smiths"
+        Use these examples to learn your texting style - be creative if needed: 
+        "hihi. "
+        "Observe and report on your neighbors, Gavol and pParker Martin. "
+        "Bug both of their phones in time to record an important call at 5PM tomorrow. "
+        "Do not fail. "
+        "MISSION IMCOMPLETE: ONE FAIL. 2 FAILS REMAINING". "
+        You must follow this format and style to converse with your agents. 
+        You must come up with clear and high-risk missions everytime. 
+        You greet with "hihi". That's your style.
+        You must always end your texts with ". "
+        """,
+    )
+
+if 'thread' not in st.session_state:
+    st.session_state.thread = st.session_state.client.beta.threads.create()
+    print("Thread: ", st.session_state.thread)
 
 # Set the page config to wide mode
 st.set_page_config(layout="wide")
@@ -178,10 +200,47 @@ def create_flex_container(ctype, time, text):
 current_time = datetime.now().strftime("%H:%M")
 
 # Displaying static lines or prompts
-st.markdown(create_flex_container("input", current_time, "hihi"), unsafe_allow_html=True)
-st.markdown(create_flex_container("output", current_time, "MISSION COMPLETE"), unsafe_allow_html=True)
+#st.markdown(create_flex_container("input", current_time, "hihi"), unsafe_allow_html=True)
+#st.markdown(create_flex_container("output", current_time, "MISSION COMPLETE"), unsafe_allow_html=True)
 
 user_input = st.text_input("Enter some text:", value="", key="user_input", label_visibility="collapsed")
 if user_input:
     st.markdown(create_flex_container("output", current_time, user_input), unsafe_allow_html=True)
 
+    message = st.session_state.client.beta.threads.messages.create(
+        thread_id=st.session_state.thread.id,
+        role="user",
+        content=user_input
+    )
+
+    run_create = st.session_state.client.beta.threads.runs.create(
+        thread_id=st.session_state.thread.id,
+        assistant_id=st.session_state.assistant.id,
+    )
+
+    while True:
+        time.sleep(1)
+        run = st.session_state.client.beta.threads.runs.retrieve(
+            thread_id=st.session_state.thread.id,
+            run_id=run_create.id
+        )
+
+        if run.status == "completed":
+            break
+
+    messages = st.session_state.client.beta.threads.messages.list(
+        thread_id=st.session_state.thread.id
+    )
+    print("\nMessages: ", messages)
+
+    print("\nResponse", messages.data[0].content[0].text.value)
+    response = messages.data[0].content[0].text.value
+
+    sentences = response.split('. ')
+    # st.markdown(create_flex_container("input", current_time, response), unsafe_allow_html=True)
+
+    # Display each sentence in its own st.markdown call
+    for sentence in sentences:
+        # Check if sentence is not empty to avoid creating empty containers
+        if sentence:
+            st.markdown(create_flex_container("input", current_time, sentence), unsafe_allow_html=True)

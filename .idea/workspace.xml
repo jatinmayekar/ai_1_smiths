@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5bfa7871-59a3-4a5f-a9b9-66b15848cd3d" name="Changes" comment="setup and copy style of the tv show &quot;mr &amp; mrs smith&quot; app. static inputs only">
+    <list default="true" id="5bfa7871-59a3-4a5f-a9b9-66b15848cd3d" name="Changes" comment="move input text box to bottom of page and add openai">
       <change afterPath="$PROJECT_DIR$/.env" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
@@ -92,12 +92,48 @@
       <option name="project" value="LOCAL" />
       <updated>1710468502214</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="move input text box to bottom of page and add openai">
+      <option name="closed" value="true" />
+      <created>1710469457981</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1710469457981</updated>
+    </task>
+    <task id="LOCAL-00003" summary="move input text box to bottom of page and add openai">
+      <option name="closed" value="true" />
+      <created>1710469476433</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1710469476433</updated>
+    </task>
+    <task id="LOCAL-00004" summary="move input text box to bottom of page and add openai">
+      <option name="closed" value="true" />
+      <created>1710469521416</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1710469521416</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="setup and copy style of the tv show &quot;mr &amp; mrs smith&quot; app. static inputs only" />
-    <option name="LAST_COMMIT_MESSAGE" value="setup and copy style of the tv show &quot;mr &amp; mrs smith&quot; app. static inputs only" />
+    <MESSAGE value="move input text box to bottom of page and add openai" />
+    <option name="LAST_COMMIT_MESSAGE" value="move input text box to bottom of page and add openai" />
   </component>
 </project>
